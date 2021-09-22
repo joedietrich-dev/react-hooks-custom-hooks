@@ -2,18 +2,15 @@ import { useEffect, useState } from "react";
 
 // take in the url
 function useQuery(url) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  // rename `posts` to a more generic `data`
-  const [data, setData] = useState(null);
+  const [{ isLoaded, data }, setData] = useState({ isLoaded: false, data: null })
 
   useEffect(() => {
-    setIsLoaded(false);
+    setData({ isLoaded: false, data: null });
     fetch(url)
       .then((r) => r.json())
       .then((data) => {
-        setData(data);
-        setIsLoaded(true);
-      });
+        setData({ data, isLoaded: true });
+      })
   }, [url]);
   // the url is now a dependency
   // we want to use the side effect whenever the url changes
